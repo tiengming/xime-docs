@@ -192,6 +192,38 @@ keyboard:
 
 > 完整示例见仓库 `docs/config_examples/comma_period/xime.custom.yaml`（中文与英文各一份）。
 
+### 平板布局变体（`qwerty_tablet` / `qwerty_en_tablet`）
+
+平板 / 大屏设备（最小宽度 ≥ 600dp，不随横竖屏变化）上，若配置中存在 `qwerty_tablet` / `qwerty_en_tablet` 段，全键盘会**整段替换**同名基础段（`qwerty` / `qwerty_en`），用于给平板排一套更宽松的布局（内置默认参考 Gboard 平板：行 1 左端 Tab、数字上标常驻加大；行 2 左端大写锁定键 `caps`；行 3 两端 shift 对称、行尾逗号句号；底行两端 `?123` + 超宽空格 + 左右光标键）。平板上键盘两侧留边、键圆角与间距也随参数档加大：
+
+```yaml
+keyboard:
+  qwerty_tablet:
+    button_layout: standard
+    layout:
+      rows:
+        - [tab, q, w, e, r, t, y, u, i, o, p, delete]
+        - [caps, a, s, d, f, g, h, j, k, l, enter]
+        - [shift_left, z, x, c, v, b, n, m, comma, period, shift_right]
+        - [mode_change, emoji, space, cursor_left, cursor_right, mode_change]
+    keys:
+      # ... 与基础段相同的 keys 语法
+      cursor_left: { tap: { action: cursor_left } }
+      cursor_right: { tap: { action: cursor_right } }
+      tab: { tap: { action: tab } }
+      caps: { width: 1.4 }
+      # 左右 shift 独立 id：宽度与手势可分别配置，未配置的手势沿用 shift 状态机
+      shift_left: { width: 1.6 }
+      shift_right: { width: 1.2 }
+```
+
+要点：
+
+- **手机不受影响**：非平板设备完全忽略 `*_tablet` 段，仍走基础段。
+- 段结构与基础段完全相同（`button_layout` + `layout.rows` + `keys`），`keys` 需要写全（平板段不做与基础段的键级合并）。
+- **回退规则**：平板上没有 `*_tablet` 段时（内置或 `xime.custom.yaml` 任一来源存在即算有），维持基础段行为；老用户的自定义配置无需任何改动。
+- 内置 `qwerty_tablet` / `qwerty_en_tablet` 直接写在 `xime.custom.yaml` 同名段即可覆盖。
+
 ---
 
 ## `keys` — 行为（每个键做什么）
@@ -286,6 +318,11 @@ space: { long_press: { values: [ { action: voice } ] } }
 | `space` | 空格 | 3 |
 | `comma` | 逗号 | 0.8 |
 | `earth` | 中英切换 | 0.8 |
+| `symbol` / `emoji` / `voice` | 符号 / 表情 / 语音面板 | 1 |
+| `cursor_left` / `cursor_right` | 光标左右移动键 | 1 |
+| `tab` | Tab 键（发送 KEYCODE_TAB） | 1 |
+| `caps` | 大写锁定键（单击切换锁定，锁定态高亮） | 1.4 |
+| `shift_left` / `shift_right` | 左 / 右 shift 独立键（可分别配置宽度与手势，手势沿用 shift 状态机） | 1.4 |
 
 > 字母键默认宽度为 `1`（等宽）。所有这些键都可用 `width` 单独调整。
 
@@ -357,6 +394,8 @@ qwerty:
 | `command` | 执行命令（`value` 指定命令名，见下） |
 | `select_all` / `copy` / `cut` / `paste` | 编辑操作 |
 | `line_start` / `line_end` | 光标移到行首 / 行尾 |
+| `cursor_left` / `cursor_right` | 光标左移 / 右移一步（组合态移动编码编辑光标，空闲态移动编辑器光标） |
+| `tab` | 发送 Tab 键（KEYCODE_TAB） |
 | `undo` | 撤销 |
 | `none` | 无动作，仅显示 |
 | `repeat` | 重复上一次输入 |
