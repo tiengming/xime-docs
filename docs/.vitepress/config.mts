@@ -98,6 +98,7 @@ export default defineConfig({
           text: '智能与扩展',
           items: [
             { text: '智能联想', link: '/features/smart-prediction' },
+            { text: '智能纠错', link: '/features/correction' },
             { text: '语音转文本', link: '/features/speech-to-text' },
             { text: '扩展商店', link: '/features/extension-store' },
             { text: '插件管理', link: '/plugins/' }

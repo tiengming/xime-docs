@@ -288,14 +288,17 @@ try {
 
 ## 工具链 `xipm`
 
+全局选项：`-s, --device <SERIAL>`（等价 `adb -s`，多条子命令前后均可写；缺省自动选设备）。
+
 | 命令 | 作用 |
 |------|------|
-| `xipm init <name> --type <t> [--parent <dir>]` | 生成插件骨架（别名 `new`） |
+| `xipm init <name> --type <t> [--parent <dir>]` | 生成插件骨架（别名 `new`；`--type` 取 `tool` / `emoji` / `speech` / `prediction` / `clipboard_sync` / `backup`） |
 | `xipm build [dir] [--all] [--plugins-dir plugins] [--out build/plugin-js] [--minify]` | 编译为单文件 `main.js` |
 | `xipm pack [dir] [--all] [--release-dir build/plugin-release] [--no-minify] [--with-assets]` | 编译 + 打包 `.xipk` |
 | `xipm check [dir] [--all]` | 校验 `manifest.json` 字段/命名空间/类型与能力一致性 |
 | `xipm test [dir] [--all] [--smoke]` | 内嵌 QuickJS + mock host 运行 `main.test.ts`（无需真机） |
-| `xipm dev [dir] [--device <serial>] [--no-logs] [--package <pkg>]` | 真机热调试：watch → 编译打包 → adb 推送 → 热重载 → 跟随日志 |
+| `xipm dev [dir] [--package <pkg>] [--no-logs]` | 真机热调试：watch → 编译打包 → adb 推送 → 热重载 → 跟随日志 |
+| `xipm install [target] [--package <pkg>] [--adb <path>]` | 真机安装：把 `.xipk`（或插件目录，先编译打包）热安装到手机 |
 | `xipm logs [dir] [--history] [--lines N] [--json]` | 真机插件日志（实时 / 历史错误） |
 
 仓库内常用：
@@ -350,7 +353,7 @@ xipm pack plugins/my-plugin --with-assets
 
 1. **扩展商店 → 插件**：浏览下载（官方信任）
 2. **插件管理 → 从文件安装插件**：导入 `.xipk`（第三方信任）
-3. **浏览器导入**：无线导入页面上传 `.xipk`
+3. **浏览器导入**：在「输入方案 → 已导入」页点右上角「+」→「浏览器导入」，在页面上传 `.xipk`
 4. **热调试**：`xipm dev`（需开启插件开发模式）
 
 ## 版本兼容

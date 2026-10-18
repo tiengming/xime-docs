@@ -29,7 +29,7 @@
 
 ## 应用你的配置文件
 
-1. 打开 `xime app -> 输入方案 -> 浏览器导入`。
+1. 打开 `xime app -> 输入方案 -> 已导入 -> 右上角 + -> 浏览器导入`。
 2. 打开你的浏览器，输入手机显示的地址（手机和电脑需在同一网络下）。
 3. 上传 `xime.custom.yaml`。
 4. 回到 xime app，点击部署。
@@ -88,8 +88,9 @@ keyboard:             # 键盘配置
       rows: [...]
     keys: {...}
 
-  # 其他可选键盘：合并键 qwerty_14 / qwerty_17 / qwerty_18、九键 t9 等；也可新增自定义段
-  # （layout.rows + keys + schemas 绑定方案即可生效，可选 type 声明段类型，见下文）
+  # 其他可选键盘：合并键 qwerty_14 / qwerty_17 / qwerty_18、九键 t9、笔画 stroke、手写 handwriting、
+  # 数字/常用符号面板 number / common_symbols、平板变体 qwerty_tablet / number_tablet 等；
+  # 也可新增自定义段（layout.rows + keys + schemas 绑定方案即可生效，可选 type 声明段类型，见下文）
 ```
 
 > 本文以 `keyboard.qwerty` / `keyboard.qwerty_en` 的 `layout` + `keys` 为核心（新版重点），
@@ -627,6 +628,7 @@ keyboard:
 | `t9` | 九键 | 由九键专属组件渲染，配置写在该段下（`layout` 三列 / `keys` / `side_symbols`） |
 | `stroke` | 笔画 | 由笔画专属组件渲染 |
 | `handwriting` | 手写 | 手写方案不经过 rime 引擎 |
+| `columns` | 三列面板 | 数字键盘的三列布局（`layout.left` / `rows` / `right`），键 id 同数字键盘 |
 
 **用法一：全键盘段名撞上保留名时解救。** 保留名 `t9` / `stroke` / `handwriting` 默认按代码布局处理，若全键盘段恰好想用这些名字，显式声明 `type: full` 即可：
 
@@ -752,7 +754,7 @@ keyboard:
 
 用于自定义键盘按键、字根、候选项和注释的字体。字体文件需放在设备 `rime/` 目录（或其子目录）下，可通过浏览器导入上传。
 
-**导入字体文件**：打开 `xime app -> 输入方案 -> 浏览器导入`，上传 `.ttf` / `.otf` / `.woff` / `.woff2` 字体文件，会自动保存到 `rime/fonts/` 目录。
+**导入字体文件**：打开 `xime app -> 输入方案 -> 已导入 -> 右上角 + -> 浏览器导入`，上传 `.ttf` / `.otf` / `.woff` / `.woff2` 字体文件，会自动保存到 `rime/fonts/` 目录。
 
 ```yaml
 keyboard:
@@ -786,6 +788,45 @@ keyboard:
 
 > 字体文件不存在或加载失败时，自动回退到默认字体，不影响输入法使用。
 
+### `keyboard.number` / `keyboard.common_symbols` — 数字 / 常用符号面板
+
+数字键盘与常用符号面板的键位同样可用 yaml 配置（v3.2.0+）。两段都是面板段，不参与方案绑定，分别由「数字」与「符号」路由显示：
+
+- `keyboard.number` — 数字键盘，**三列布局**（`layout.left` / `rows` / `right`，`type: columns`）
+- `keyboard.common_symbols` — 常用符号面板，**行布局**（`layout.rows`），中英共用一套
+
+```yaml
+keyboard:
+  number:
+    type: columns
+    layout:
+      left:
+        - ["+", "-", "*", "/"]   # 子数组 = 纵向键柱（四键一柱，首尾键自动合并圆角）
+        - back
+      rows:
+        - [1, 2, 3]
+        - [4, 5, 6]
+        - [7, 8, 9]
+        - [open_symbols, 0, "."]
+      right: [delete, space_bar, emoji, enter]
+
+  common_symbols:
+    layout:
+      rows:
+        - [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+        - ["＠", "＃", "＄", "＆", "＿", "－", "＋", "（", "）", "／"]
+        - [open_symbols, "＊", "“", "”", "！", "？", ",", "."]
+        - [back, number, space_key, enter]
+```
+
+要点：
+
+- **数字面板键 id**：数字与运算符是值键（点按直接上屏）；功能键 `back`（返回字母键盘）/ `open_symbols`（打开全量符号面板）/ `space_bar` / `delete` / `emoji` / `enter` 行为内置，`keys.<id>` 只用来覆盖宽度与键面文字（`enter` / `delete` 支持配动作）；
+- **符号面板**中英共用一套，默认使用**中文形态**符号（`＠＃＄…`），只有 `,` 与 `.` 保留半角 ASCII；功能键 `back` / `number` / `open_symbols` / `space_key` / `delete` / `enter` 行为内置；
+- 键间距分别沿用 `keyboard.key.number` 与 `keyboard.key.symbol`（后者为面板旧名，与段名不同，保持老配置兼容）；
+- `layout` 为**整段覆盖**：写了就需要给出完整结构；
+- **平板设备档变体**：平板上（最小宽度 ≥ 600dp）若存在 `number_tablet` / `common_symbols_tablet` 段，会**整段替换**同名基础段，手机不受影响（与 `qwerty_tablet` 同一约定，见上文「平板布局变体」）。
+
 ### `keyboard.t9` — 九键键盘配置
 
 九键键盘由三部分组成：`layout`（三列布局）、`keys`（数字键手势与键面）、`side_symbols`（左侧快捷符号栏）。方案绑定见上文「`keyboard.<section>.schemas` — 键盘布局绑定声明」，内置默认为 `[t9_pinyin, t9, wanxiang_t9, rime_frost_t9]`。
@@ -794,7 +835,7 @@ keyboard:
 >
 > 需要**多个九键变体并存**或自定义九键段名？见上文「`keyboard.<section>.type` — 段类型声明」：`type: t9` 的段可自由命名并存，各绑各的方案。
 
-#### `layout` — 三列布局（下一版本提供）
+#### `layout` — 三列布局
 
 九键采用「左列 + 主区 + 右列」的三列结构，未配置时为以下内置默认（与历史布局一致）：
 
@@ -824,7 +865,7 @@ keyboard:
 
 其中 `candidates` 是拼音候选面板占位：候选态显示音节，空闲态显示下方 `side_symbols`。
 
-#### `keys` — 数字键手势与键面（下一版本提供）
+#### `keys` — 数字键手势与键面
 
 数字键的键面、长按候选与手势都可自定义，在 `xime.custom.yaml` 的 `keyboard.t9.keys` 同路径覆盖：
 
