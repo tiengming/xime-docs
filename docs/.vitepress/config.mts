@@ -1,7 +1,10 @@
 import { defineConfig } from 'vitepress'
 import { load as loadYaml } from 'js-yaml'
+import { fileURLToPath } from 'node:url'
+import { pageMarkdown } from './plugins/pageMarkdown'
 
 const INDEX_BASE = 'https://index.ximei.me'
+const SRC_DIR = fileURLToPath(new URL('..', import.meta.url))
 
 const INDEX_PAGES: Record<string, { field: string; path: string }> = {
   'plugin-list.md': { field: 'pluginIndex', path: '/plugins/v2/index.yaml' },
@@ -50,11 +53,31 @@ export default defineConfig({
       frontmatter: { ...pageData.frontmatter, [conf.field]: index }
     }
   },
+  // 告诉 AI 爬虫/浏览器：本页有 Markdown 版本（Mintlify、Fumadocs 等站点同样约定）
+  transformHead({ page, pageData, siteData }) {
+    if (!page.endsWith('.md')) return []
+    const layout = pageData.frontmatter.layout
+    if ((layout && layout !== 'doc') || pageData.frontmatter.copyMarkdown === false) return []
+    return [
+      [
+        'link',
+        {
+          rel: 'alternate',
+          type: 'text/markdown',
+          href: `${siteData.base}${page}`
+        }
+      ]
+    ]
+  },
   vite: {
     server: {
       host: '127.0.0.1',
       port: 3000
-    }
+    },
+    plugins: [
+      // 为每个页面生成同路径的 .md 版本，供「复制 MD」按钮读取
+      pageMarkdown({ srcDir: SRC_DIR, exclude: ['faq-items'] })
+    ]
   },
   themeConfig: {
     nav: [
