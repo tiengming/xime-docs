@@ -43,7 +43,8 @@ export default defineConfig({
   lang: 'zh-CN',
   base: '/',
   // faq-items/ 下的 md 是 FAQ 页的数据源(经 content loader 收集),不作为独立页面构建
-  srcExclude: ['**/faq-items/**'],
+  // dist/ 是历史产物,避免被当成 /dist/* 页面重复构建
+  srcExclude: ['**/faq-items/**', '**/dist/**'],
   async transformPageData(pageData) {
     const conf = INDEX_PAGES[pageData.relativePath]
     if (!conf) return
@@ -83,6 +84,7 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '使用文档', link: '/usage' },
+      { text: 'Windows 版', link: '/windows/' },
       { text: '方案', link: '/rime-list' },
       { text: '模型', link: '/model-list' },
       { text: '布局', link: '/layout-list' },
@@ -153,6 +155,18 @@ export default defineConfig({
             { text: '插件开发教程', link: '/plugins/PLUGIN_DEV_TUTORIAL' },
             { text: '插件开发指南', link: '/plugins/PLUGIN_DEVELOPMENT_GUIDE' },
             { text: '测试指南', link: '/plugins/TESTING' }
+          ]
+        }
+      ],
+      '/windows/': [
+        {
+          text: 'Windows 版（曦码·曜）',
+          items: [
+            { text: '总览与安装', link: '/windows/' },
+            { text: '输入方案', link: '/windows/input-scheme' },
+            { text: '计算器', link: '/windows/calculator' },
+            { text: '常见问题', link: '/windows/faq' },
+            { text: '更新记录', link: '/windows/changelog' }
           ]
         }
       ]
