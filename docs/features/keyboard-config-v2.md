@@ -74,6 +74,7 @@ keyboard:             # 键盘配置
   qwerty:                     # 中文 26 键键盘
     layout:
       rows:                   # 决定键位：行内可混排字母与功能键
+      row_align: uniform      # 行宽与对齐策略（可选，v3.3.0+，见下文）
         - [q, w, e, r, t, y, u, i, o, p]
         - [a, s, d, f, g, h, j, k, l]
         - [shift, z, x, c, v, b, n, m, delete]
@@ -224,6 +225,32 @@ keyboard:
 - 段结构与基础段完全相同（`button_layout` + `layout.rows` + `keys`），`keys` 需要写全（平板段不做与基础段的键级合并）。
 - **回退规则**：平板上没有 `*_tablet` 段时（内置或 `xime.custom.yaml` 任一来源存在即算有），维持基础段行为；老用户的自定义配置无需任何改动。
 - 内置 `qwerty_tablet` / `qwerty_en_tablet` 直接写在 `xime.custom.yaml` 同名段即可覆盖。
+
+---
+
+## 行宽与对齐策略（`row_align` / `columns`，v3.3.0+）
+
+写在 `layout` 下，作用于整段键盘；均可选，不配置时行为与旧版一致。
+
+```yaml
+keyboard:
+  qwerty:
+    layout:
+      columns: 10            # 参考列数，缺省取首行键数；uniform 下决定行宽与键宽
+      row_align: uniform     # uniform（默认）= 键宽按列对齐、行居中；stretch = 行内均分铺满
+      rows:
+        - [q, w, e, r, t, y, u, i, o, p]
+        - { keys: [a, s, d, f, g, h, j, k, l], align: stretch }   # 该行满宽均分
+        - { keys: [z, x, c, v, b, n, m], width: 0.7 }             # 该行占 70% 宽（居中）
+        - [shift, z, x, c, v, b, n, m, delete]
+        - [mode_change, comma, space, earth, enter]
+```
+
+- `row_align: uniform`（默认）：各行键宽按列对齐，整行居中，适合各行键数不一致的布局（如上排 10 键、中排 9 键）。
+- `row_align: stretch`：每行在行内均分，铺满整个键盘宽度。
+- 行既可写成普通数组（继承键盘级策略），也可写成对象做**行级覆盖**：
+  - `align` — 覆盖该行的对齐策略（`uniform` / `stretch`）
+  - `width` — 该行占键盘宽度的比例（如 `0.7` = 70% 宽，居中显示）
 
 ---
 
