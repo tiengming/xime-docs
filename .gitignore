@@ -4,6 +4,8 @@ node_modules/
 # VitePress build output
 docs/.vitepress/dist
 docs/.vitepress/cache
+# pageMarkdown 插件产物（复制本页 Markdown）
+docs/dist/
 
 # IDE
 .idea/

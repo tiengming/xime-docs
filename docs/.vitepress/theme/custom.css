@@ -1330,3 +1330,250 @@ html.x-home-view.x-nav-scrolled .VPNavBar {
   .x-cta-title { font-size: 1.55rem; line-height: 1.4; }
   .x-cta-glow { width: 300px; height: 150px; top: -110px; }
 }
+
+/* ===== 平台落地页（/pc/ /mobile/，PcHome / MobileHome） ===== */
+
+/* Hero 右侧视觉容器（桌面候选栏 / 手机截图共用布局） */
+.x-hero-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  animation: xFadeUp 1.1s ease-out 0.15s both;
+}
+.x-pc-shot {
+  width: min(500px, 92%);
+  will-change: transform;
+  transition: transform 0.25s ease-out;
+  animation: xBob 6s ease-in-out infinite;
+}
+
+/* 功能卡片以 <a> 呈现时去掉链接样式 */
+a.x-feature-card {
+  text-decoration: none;
+}
+a.x-feature-card h3,
+a.x-feature-card p {
+  color: inherit;
+}
+a.x-feature-card p {
+  color: var(--x-text-2);
+}
+
+/* ---- 平台支持卡片 ---- */
+.x-platforms {
+  position: relative;
+  z-index: 1;
+  max-width: var(--x-max-w);
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.x-platforms.x-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.x-plat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.x-plat-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.x-plat-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem;
+  text-decoration: none;
+}
+.x-plat-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.x-plat-card p {
+  font-size: 0.88rem;
+  color: var(--x-text-2);
+  line-height: 1.65;
+  margin-bottom: 1.1rem;
+}
+.x-plat-card.x-plat-soon {
+  opacity: 0.72;
+}
+.x-plat-card.x-plat-soon:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--x-line);
+}
+.x-plat-card.x-plat-soon:hover::before {
+  opacity: 0;
+}
+
+.x-plat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.95rem;
+}
+.x-plat-logo {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: linear-gradient(135deg, rgba(168, 143, 240, 0.28), rgba(143, 115, 226, 0.14));
+  border: 1px solid rgba(168, 143, 240, 0.3);
+  border-radius: 13px;
+  box-shadow: 0 6px 20px rgba(143, 115, 226, 0.22);
+}
+.x-plat-status {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+.x-plat-status-ok {
+  color: #fff;
+  background: linear-gradient(135deg, #a88ff0, #7b5fe0);
+  box-shadow: 0 4px 14px rgba(143, 115, 226, 0.4);
+}
+.x-plat-status-soon {
+  color: var(--x-text-2);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.x-plat-go {
+  margin-top: auto;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--x-brand);
+}
+
+/* ---- 首页 CTA 下的平台入口 ---- */
+.x-cta-sub {
+  position: relative;
+  margin-top: 1.4rem;
+  font-size: 0.9rem;
+  color: var(--x-text-2);
+}
+.x-cta-sub a {
+  color: var(--x-brand);
+  font-weight: 600;
+  text-decoration: none;
+}
+.x-cta-sub a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 960px) {
+  .x-pc-shot { width: min(420px, 92%); }
+  .x-plat-grid, .x-plat-grid-2 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .x-plat-grid, .x-plat-grid-2 { grid-template-columns: 1fr; }
+  .x-pc-shot { width: 100%; }
+}
+
+/* 沉浸式深色页（首页/落地页）上的导航下拉面板 */
+html.x-home-view .VPNavBarMenuGroup .VPMenu {
+  --vp-c-bg-elv: #10121f;
+  background: rgba(16, 18, 31, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(14px);
+  border-radius: 12px;
+}
+html.x-home-view .VPNavBarMenuGroup .VPMenu .item {
+  color: rgba(238, 240, 250, 0.85);
+}
+html.x-home-view .VPNavBarMenuGroup .VPMenu .item:hover {
+  color: #fff;
+  background: rgba(168, 143, 240, 0.12);
+}
+
+/* ---- Beta 标识（PC 落地页） ---- */
+.x-beta-chip {
+  display: inline-block;
+  vertical-align: super;
+  margin-left: 0.7rem;
+  padding: 0.16rem 0.72rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #ffd9a8;
+  background: rgba(255, 176, 66, 0.12);
+  border: 1px solid rgba(255, 176, 66, 0.45);
+  border-radius: 999px;
+  text-shadow: none;
+}
+.x-plat-status-beta {
+  color: #ffd9a8;
+  background: rgba(255, 176, 66, 0.12);
+  border: 1px solid rgba(255, 176, 66, 0.45);
+}
+
+/* ===== 平台差异 Tabs（PlatTabs，文档页通用，跟随明暗主题） ===== */
+.plat-tabs {
+  margin: 1.2rem 0;
+}
+.plat-tabs-bar {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  border-bottom: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+.plat-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 1.05rem;
+  font-size: 0.87rem;
+  font-weight: 600;
+  color: var(--vp-c-text-2);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.plat-tab:hover {
+  color: var(--vp-c-text-1);
+}
+.plat-tab-active {
+  color: var(--vp-c-brand-1, var(--vp-c-brand));
+  background: var(--vp-c-bg);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+.plat-tab-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.06rem 0.5rem;
+  border-radius: 999px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1, var(--vp-c-brand));
+}
+.plat-tab-panel {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 0 10px 10px 10px;
+  padding: 1rem 1.25rem;
+  background: var(--vp-c-bg);
+}
+.plat-tab-panel > :first-child {
+  margin-top: 0;
+}
+.plat-tab-panel > :last-child {
+  margin-bottom: 0;
+}

@@ -1,7 +1,7 @@
 /**
- * FAQ 数据加载器:构建时从 docs/faq-items/*.md 收集常见问题。
+ * FAQ 数据加载器:构建时从 docs/mobile/faq-items/*.md 收集常见问题。
  *
- * 新增一条问答:在该目录新建 md 文件即可,无需改任何代码——
+ * 新增一条问答:在 docs/mobile/faq-items/ 目录新建 md 文件即可,无需改任何代码——
  *   - frontmatter 的 category / q 必填,linkHref / linkText 可选;
  *   - 正文即答案,支持完整 Markdown(列表、代码块、图片、链接等);
  *   - 正文里直接写 B 站视频链接即可内嵌播放器,如:
@@ -35,7 +35,7 @@ function embedBiliVideos(html: string): string {
   )
 }
 
-export default createContentLoader('/faq-items/*.md', {
+export default createContentLoader('/mobile/faq-items/*.md', {
   render: true,
   transform(raw): FaqItem[] {
     return [...raw]

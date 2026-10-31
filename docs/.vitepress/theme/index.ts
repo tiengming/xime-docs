@@ -3,11 +3,14 @@ import DefaultTheme from 'vitepress/theme'
 import './custom.css'
 import CopyMarkdown from './components/CopyMarkdown.vue'
 import CustomHome from './components/CustomHome.vue'
+import CustomPcHome from './components/PcHome.vue'
+import CustomMobileHome from './components/MobileHome.vue'
 import CustomPluginList from './components/CustomPluginList.vue'
 import CustomRimeList from './components/CustomRimeList.vue'
 import CustomModelList from './components/CustomModelList.vue'
 import CustomLayoutList from './components/CustomLayoutList.vue'
 import CustomFaq from './components/CustomFaq.vue'
+import PlatTabs from './components/PlatTabs.vue'
 
 export default {
   extends: DefaultTheme,
@@ -21,10 +24,13 @@ export default {
   },
   enhanceApp({ app }) {
     app.component('CustomHome', CustomHome)
+    app.component('CustomPcHome', CustomPcHome)
+    app.component('CustomMobileHome', CustomMobileHome)
     app.component('CustomPluginList', CustomPluginList)
     app.component('CustomRimeList', CustomRimeList)
     app.component('CustomModelList', CustomModelList)
     app.component('CustomLayoutList', CustomLayoutList)
     app.component('CustomFaq', CustomFaq)
+    app.component('PlatTabs', PlatTabs)
   }
 }

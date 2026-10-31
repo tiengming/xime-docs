@@ -134,7 +134,7 @@
 
       <div class="xidx-more">
         <a href="https://github.com/ximeiorg/Xime/issues" class="x-btn x-btn-glass" target="_blank" rel="noopener">GitHub Issues</a>
-        <a href="/usage" class="x-btn x-btn-glass">完整使用文档</a>
+        <a href="/mobile/usage" class="x-btn x-btn-glass">完整使用文档</a>
       </div>
     </section>
 

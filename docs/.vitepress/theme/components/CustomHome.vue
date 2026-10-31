@@ -51,8 +51,8 @@
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
               立即下载
             </a>
-            <a href="/usage" class="x-btn x-btn-glass">快速开始</a>
-            <a href="https://github.com/ximeiorg/Xime" class="x-btn x-btn-glass" target="_blank">
+            <a href="/mobile/usage" class="x-btn x-btn-glass">快速开始</a>
+            <a href="https://github.com/ximeiorg" class="x-btn x-btn-glass" target="_blank">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.6.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0C17.3 5 18.3 5.3 18.3 5.3c.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0012 .3"/></svg>
               GitHub
             </a>
@@ -133,8 +133,9 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
             下载 Xime
           </a>
-          <a href="/changelog" class="x-btn x-btn-glass">查看更新日志</a>
+          <a href="/mobile/changelog" class="x-btn x-btn-glass">查看更新日志</a>
         </div>
+        <p class="x-cta-sub">还有 <a href="/mobile/">手机版主页</a> 与 <a href="/pc/">桌面版主页（曦码·曜）</a></p>
       </div>
     </section>
 
