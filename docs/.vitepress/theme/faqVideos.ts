@@ -22,5 +22,15 @@ export const videos: FaqVideo[] = [
     bvid: 'BV1Pvgx6rEfv',
     title: '如何自定义你的键盘：五笔字根、小鹤双拼韵母、微软双拼分号键',
     kind: 'tutorial'
+  },
+  {
+    bvid: 'BV11BsX6WEsp',
+    title: '曦码输入法教程之快速打开数字键盘',
+    kind: 'tutorial'
+  },
+  {
+    bvid: 'BV1dVxw6aE2j',
+    title: '曦码输入法教程之设置无气泡布局',
+    kind: 'tutorial'
   }
 ]
